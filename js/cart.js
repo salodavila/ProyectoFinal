@@ -6,22 +6,22 @@
 // Importamos la función para obtener la tasa limpia desde el módulo unificado 
 import { obtenerTasaEuroActual } from './api.js';
 
-let carrito = []; // [cite: 28]
-const TASA_IVA = 0.15; // [cite: 28]
+let carrito = []; 
+const TASA_IVA = 0.15; 
 
-export function inicializarCarrito() { // 
+export function inicializarCarrito() { 
     const selectZona = document.getElementById('shipping-zone');
-    // Escuchamos los cambios en la zona de envío [cite: 39]
+    // Escuchamos los cambios en la zona de envío 
     selectZona.addEventListener('change', actualizarTotales);
 }
 
 export function agregarProductoAlCarrito(producto) { // 
-    const productoExistente = carrito.find(item => item.id === producto.id); // Método find() [cite: 34]
+    const productoExistente = carrito.find(item => item.id === producto.id); // Método find() 
 
     if (productoExistente) {
         productoExistente.cantidad += 1;
     } else {
-        carrito.push({ ...producto, cantidad: 1 }); // Operador Spread ES6+ [cite: 32]
+        carrito.push({ ...producto, cantidad: 1 }); // Operador Spread ES6+ 
     }
 
     renderizarCarrito();
@@ -38,7 +38,7 @@ function renderizarCarrito() {
 
     contenedorCart.innerHTML = "";
 
-    carrito.map(item => { // Método map() [cite: 34]
+    carrito.map(item => { // Método map() 
         const itemElement = document.createElement('div');
         itemElement.style.display = 'flex';
         itemElement.style.justify = 'space-between';
@@ -55,9 +55,9 @@ function renderizarCarrito() {
                 <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
                 <button class="btn-remove" data-id="${item.id}" style="margin-left:1rem; background:none; border:none; color:#cc0000; cursor:pointer;">❌</button>
             </div>
-        `; // Template Literals [cite: 30]
+        `; // Template Literals 
 
-        itemElement.querySelector('.btn-remove').addEventListener('click', () => { // Arrow Function [cite: 29]
+        itemElement.querySelector('.btn-remove').addEventListener('click', () => { // Arrow Function 
             eliminarProductoDelCarrito(item.id);
         });
 
@@ -73,7 +73,7 @@ function actualizarTotales() {
     const lblEuro = document.getElementById('eur-conversion');
     const selectZona = document.getElementById('shipping-zone');
 
-    // Calculamos el subtotal usando reduce() [cite: 34]
+    // Calculamos el subtotal usando reduce() 
     const subtotal = carrito.reduce((acumulador, item) => acumulador + (item.precio * item.cantidad), 0);
     const valorIva = subtotal * TASA_IVA;
 
@@ -104,7 +104,7 @@ function eliminarProductoDelCarrito(id) {
         if (producto.cantidad > 1) {
             producto.cantidad -= 1;
         } else {
-            carrito = carrito.filter(item => item.id !== id); // Método filter() [cite: 34]
+            carrito = carrito.filter(item => item.id !== id); // Método filter() 
         }
     }
     renderizarCarrito();
