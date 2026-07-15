@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quito Coffee Roasters | Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="brand-wrapper" style="display: flex; align-items: center; gap: 10px;">
+                <img src="/images/logo.svg" alt="Logotipo de Quito Coffee Roasters" style="width: 50px; height: 50px;">
+                <h1>Quito Coffee Roasters</h1>
+            </div>
+
+            <nav aria-label="Navegación principal">
+                <ul>
+                    <li><a href="#catalogo">Catálogo</a></li>
+                    <li><a href="#pedido">Tu Pedido</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" aria-label="Cambiar tema visual">🌙 Modo Oscuro</button>
+        </div>
+    </header>
+
+    <main>
+        
+        <section id="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <div class="slider-container">
+                    <div class="slider-wrapper">
+                        <div class="slide active">
+                            <img src="https://images.unsplash.com/photo-1507133750040-4a8f57021571?q=80&w=600&auto=format&fit=crop" alt="Granos de café de especialidad siendo tostados artesanalmente">
+                            <p class="slide-caption">Tostado Artesanal diario en Quito</p>
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=600&auto=format&fit=crop" alt="Barista preparando café filtrado de origen">
+                            <p class="slide-caption">Métodos de filtrado por expertos baristas</p>
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=600&auto=format&fit=crop" alt="Taza de café humeante en una cafetería clásica">
+                            <p class="slide-caption">Disfruta la experiencia en el Centro Histórico</p>
+                        </div>
+                    </div>
+                    <button id="prev-slide" class="slider-btn" aria-label="Imagen anterior">❮</button>
+                    <button id="next-slide" class="slider-btn" aria-label="Imagen siguiente">❯</button>
+                </div>
+                <blockquote id="daily-quote" class="loading-placeholder">Cargando frase del día...</blockquote>
+                <div id="weather-widget" class="weather-box">
+                    <p>Clima en Quito: <span id="weather-temp">--</span>°C</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="catalogo" aria-labelledby="catalogo-title">
+            <h2 id="catalogo-title">Nuestro Catálogo</h2>
+            
+            <div class="filters-container">
+                <input type="text" id="search-input" placeholder="Buscar por nombre...">
+                <select id="origin-filter">
+                    <option value="todos">Todos los orígenes</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="Brasil">Brasil</option>
+                    <option value="Etiopía">Etiopía</option>
+                </select>
+            </div>
+
+            <div id="products-grid" class="grid-container">
+                </div>
+        </section>
+
+        <section id="pedido" aria-labelledby="pedido-title">
+            <h2 id="pedido-title">Calculadora de Pedido</h2>
+            <div class="pedido-container">
+                <div id="cart-items">
+                    <p>El carrito está vacío. ¡Añade tu café favorito!</p>
+                </div>
+                
+                <div class="totals-box">
+                    <h3>Resumen de Compra</h3>
+                    <label for="shipping-zone">Zona de entrega en Quito:</label>
+                    <select id="shipping-zone">
+                        <option value="0" data-cost="0">Selecciona tu zona...</option>
+                        <option value="norte" data-cost="2.50">Norte ($2.50)</option>
+                        <option value="centro" data-cost="1.80">Centro ($1.80)</option>
+                        <option value="sur" data-cost="3.00">Sur ($3.00)</option>
+                        <option value="valles" data-cost="3.50">Valles ($3.50)</option>
+                    </select>
+
+                    <div class="price-breakdown">
+                        <p>Subtotal: $<span id="subtotal-val">0.00</span></p>
+                        <p>IVA (15%): $<span id="iva-val">0.00</span></p>
+                        <p>Envío: $<span id="shipping-val">0.00</span></p>
+                        <hr>
+                        <p class="total-highlight">Total a Pagar: $<span id="total-val">0.00</span></p>
+                        <p id="eur-conversion" class="currency-alt"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" aria-labelledby="contacto-title">
+            <h2 id="contacto-title">Contacto</h2>
+            <form id="contact-form" novalidate>
+                <div class="form-group">
+                    <label for="form-name">Nombre:</label>
+                    <input type="text" id="form-name" required>
+                    <span class="error-msg" id="error-name"></span>
+                </div>
+                <div class="form-group">
+                    <label for="form-email">Email:</label>
+                    <input type="email" id="form-email" required>
+                    <span class="error-msg" id="error-email"></span>
+                </div>
+                <div class="form-group">
+                    <label for="form-phone">Teléfono:</label>
+                    <input type="tel" id="form-phone" required>
+                    <span class="error-msg" id="error-phone"></span>
+                </div>
+                <div class="form-group">
+                    <label for="form-message">Mensaje:</label>
+                    <textarea id="form-message" required></textarea>
+                    <span class="error-msg" id="error-message"></span>
+                </div>
+                <button type="submit">Enviar Mensaje</button>
+            </form>
+            <div id="form-feedback" class="hidden"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Quito Coffee Roasters. Todos los derechos reservados.</p>
+        <p>Desarrollado con ❤️ en Quito, Ecuador.</p>
+    </footer>
+
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>

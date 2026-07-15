@@ -1,0 +1,429 @@
+/* ==========================================================================
+   1. VARIABLES DE CSS (Paleta corporativa inspirada en el café)
+   ========================================================================== */
+:root {
+    /* Tema Claro por defecto */
+    --bg-principal: #fdfbf7;       /* Blanco cálido/crema de fondo */
+    --bg-tarjeta: #ffffff;         /* Fondo blanco puro para las tarjetas */
+    --texto-principal: #2c1d11;    /* Marrón moca muy oscuro para textos */
+    --texto-secundario: #6f4e37;   /* Marrón café para subtítulos y detalles */
+    --color-acento: #c19a6b;       /* Tono canela/arena para botones y bordes */
+    --color-borde: #e6dfd5;        /* Gris cremoso para separadores sutiles */
+    --fuente-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+    /* Transición global para que el cambio de tema claro/oscuro sea suave */
+    --transicion-tema: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Variables sobreescritas cuando la clase .dark-theme está activa en el <body> */
+body.dark-theme {
+    --bg-principal: #1a120b;       /* Café oscuro profundo de fondo */
+    --bg-tarjeta: #2c1d11;         /* Marrón moca para las tarjetas */
+    --texto-principal: #fdfbf7;    /* Letras crema/blancas para contraste */
+    --texto-secundario: #e6dfd5;   /* Texto secundario claro */
+    --color-acento: #d4b28c;       /* Canela más brillante para destacar en la oscuridad */
+    --color-borde: #4a3525;        /* Bordes marrones oscuros */
+}
+
+/* ==========================================================================
+   2. ESTILOS GENERALES Y RESETEOS
+   ========================================================================== */
+* {
+    margin: 0;                     /* Quita los márgenes por defecto de todos los navegadores */
+    padding: 0;                    /* Quita los rellenos por defecto */
+    box-sizing: border-box;        /* Hace que el padding y border no alteren el ancho total de los elementos */
+}
+
+body {
+    background-color: var(--bg-principal); /* Usa la variable de fondo principal */
+    color: var(--texto-principal);         /* Usa la variable de texto principal */
+    font-family: var(--fuente-base);       /* Asigna la tipografía del sistema */
+    line-height: 1.6;                      /* Añade un espaciado interlineal cómodo para la lectura */
+    transition: var(--transicion-tema);    /* Escucha el cambio de variables para animar la transición de tema */
+}
+
+/* ==========================================================================
+   3. HEADER Y NAVEGACIÓN (Uso de Flexbox)
+   ========================================================================== */
+header {
+    background-color: var(--bg-tarjeta);   /* Fondo del header según el tema activo */
+    border-bottom: 2px solid var(--color-borde); /* Línea divisoria inferior */
+    position: sticky;                      /* Mantiene el menú fijo arriba al hacer scroll */
+    top: 0;                                /* Posiciona el menú pegado al borde superior */
+    z-index: 1000;                         /* Asegura que el menú flote por encima del contenido */
+    transition: var(--transicion-tema);
+}
+
+.header-container {
+    max-width: 1200px;             /* Ancho máximo del contenedor del encabezado */
+    margin: 0 auto;                /* Centra el contenedor en pantallas grandes */
+    padding: 1rem 2rem;            /* Espaciado interno superior/inferior y laterales */
+    display: flex;                 /* Activa Flexbox para alinear sus hijos en línea */
+    justify-content: space-between;/* Separa el Título, el Nav y el Botón de manera equitativa */
+    align-items: center;           /* Centra verticalmente todos los elementos internos */
+    flex-wrap: wrap;               /* Si no hay espacio (móviles), permite que salten de línea */
+}
+
+nav ul {
+    list-style: none;              /* Elimina los puntos/viñetas de la lista de navegación */
+    display: flex;                 /* Convierte la lista en un contenedor flex lineal */
+    gap: 1.5rem;                   /* Añade separación constante entre los enlaces */
+}
+
+nav a {
+    text-decoration: none;         /* Quita el subrayado azul clásico de los enlaces */
+    color: var(--texto-secundario);/* Color café para los enlaces */
+    font-weight: 600;              /* Texto ligeramente en negrita */
+    transition: color 0.2s ease;   /* Animación rápida al pasar el cursor */
+}
+
+nav a:hover {
+    color: var(--color-acento);    /* Cambia al color canela cuando el usuario pasa el mouse */
+}
+
+/* Botón de cambio de tema */
+#theme-toggle {
+    background-color: var(--color-acento); /* Fondo del botón */
+    color: #ffffff;                        /* Texto blanco */
+    border: none;                          /* Elimina el borde de fábrica */
+    padding: 0.5rem 1rem;                  /* Relleno interno */
+    border-radius: 20px;                   /* Esquinas completamente redondeadas */
+    cursor: pointer;                       /* Transforma el cursor en una mano indicando interacción */
+    font-weight: bold;
+    transition: transform 0.2s ease;      /* Efecto de escala */
+}
+
+#theme-toggle:hover {
+    transform: scale(1.05);                /* Agranda un 5% el botón al pasar el mouse */
+}
+
+/* --- NUEVOS ESTILOS PARA EL SLIDER --- */
+.slider-container {
+    position: relative;
+    max-width: 100%;
+    height: 350px;
+    margin: 1.5rem auto;
+    overflow: hidden; /* Oculta las imágenes que no están activas */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.slider-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Esconde el slide por defecto */
+    transition: opacity 0.5s ease-in-out; /* Animación de desvanecimiento suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide.active {
+    opacity: 1; /* Muestra el slide actual con la clase .active */
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Hace que la imagen llene el espacio sin deformarse */
+}
+
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    background: rgba(44, 29, 17, 0.75); /* Fondo oscuro translúcido color moca */
+    color: #fdfbf7;
+    width: 100%;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Botones de navegación del Slider */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(193, 154, 107, 0.8); /* Color acento canela con transparencia */
+    color: white;
+    border: none;
+    padding: 1rem 0.75rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background 0.2s;
+    z-index: 10;
+}
+
+.slider-btn:hover {
+    background: var(--texto-secundario); /* Cambia al marrón café */
+}
+
+#prev-slide { left: 10px; }
+#next-slide { right: 10px; }
+
+/* Ajuste responsive para pantallas pequeñas */
+@media (max-width: 480px) {
+    .slider-container { height: 220px; }
+    .slide-caption { font-size: 0.9rem; }
+}
+
+/* ==========================================================================
+   4. MAIN CONTENT Y CONTENEDORES
+   ========================================================================== */
+main {
+    max-width: 1200px;             /* Mantiene todo el contenido de la web alineado con el header */
+    margin: 2rem auto;             /* Centra el cuerpo y le da un margen superior/inferior */
+    padding: 0 2rem;               /* Padding lateral para pantallas medianas */
+}
+
+section {
+    margin-bottom: 4rem;           /* Separa visualmente cada bloque de requerimientos */
+}
+
+section h2 {
+    color: var(--texto-secundario);
+    border-bottom: 2px solid var(--color-acento); /* Subrayado temático para los títulos de sección */
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   5. SECCIÓN HERO (Presentación y APIs)
+   ========================================================================== */
+.hero-content {
+    background-color: var(--bg-tarjeta);
+    border-radius: 8px;            /* Suaviza las esquinas del recuadro */
+    padding: 2.5rem;               /* Espacio interno amplio */
+    text-align: center;            /* Centra los textos decorativos */
+    border: 1px solid var(--color-borde);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Sombra difuminada muy elegante */
+    transition: var(--transicion-tema);
+}
+
+#daily-quote {
+    font-style: italic;            /* Convierte la frase consumida en cursiva */
+    font-size: 1.2rem;             /* Aumenta un poco el tamaño */
+    margin: 1.5rem 0;
+    color: var(--texto-principal);
+}
+
+.weather-box {
+    display: inline-block;         /* Hace que el recuadro del clima solo ocupe su propio contenido */
+    background-color: var(--bg-principal);
+    padding: 0.5rem 1.5rem;        /* Espacio interno del widget */
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid var(--color-acento);
+}
+
+/* Indicator de carga genérico */
+.loading-placeholder {
+    color: #888888;
+    animation: palpitar 1.5s infinite; /* Simula un estado de carga "Loading..." que parpadea */
+}
+
+@keyframes palpitar {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+/* ==========================================================================
+   6. SECCIÓN CATÁLOGO (Uso de CSS Grid)
+   ========================================================================== */
+.filters-container {
+    display: flex;                 /* Flexbox para alinear buscador y selector en línea */
+    gap: 1rem;                     /* Separación entre controles */
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.filters-container input, .filters-container select {
+    padding: 0.75rem;              /* Espacio cómodo para hacer clic */
+    border-radius: 5px;
+    border: 1px solid var(--color-borde);
+    background-color: var(--bg-tarjeta);
+    color: var(--texto-principal);
+    transition: var(--transicion-tema);
+}
+
+.filters-container input {
+    flex: 1;                       /* El buscador se expandirá para ocupar el espacio restante */
+    min-width: 200px;              /* Ancho mínimo para que no se comprima demasiado */
+}
+
+/* Grid dinámico de Tarjetas */
+.grid-container {
+    display: grid;                 /* Activa el súper contenedor Grid */
+    /* Crea columnas automáticas adaptables que miden mínimo 280px y máximo 1 fracción equitativa */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 2rem;                     /* Separación idéntica entre todas las tarjetas verticales y horizontales */
+}
+
+/* Estilos de las Tarjetas de Café individuales */
+.product-card {
+    background-color: var(--bg-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;        /* Ordena los datos de la tarjeta en columna */
+    justify-content: space-between;/* Empuja el botón hacia la parte inferior de la tarjeta */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, var(--transicion-tema);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);    /* Levanta sutilmente la tarjeta al pasar el cursor */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Intensifica la sombra al flotar */
+}
+
+.product-card button {
+    background-color: var(--texto-secundario);
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.product-card button:hover {
+    background-color: var(--color-acento); /* Cambia a canela cuando se va a añadir al carro */
+}
+
+/* ==========================================================================
+   7. CALCULADORA DE PEDIDO Y CARRITO (Layout Dividido)
+   ========================================================================== */
+.pedido-container {
+    display: grid;
+    /* Divide la pantalla en dos columnas en desktop: 2 partes para items, 1 para totales */
+    grid-template-columns: 2fr 1fr; 
+    gap: 2rem;
+}
+
+.totals-box {
+    background-color: var(--bg-tarjeta);
+    border: 2px solid var(--color-acento); /* Destaca la caja de totales con el color de acento */
+    border-radius: 8px;
+    padding: 1.5rem;
+    height: fit-content;           /* Se adapta al tamaño del resumen, no se estira de más */
+    transition: var(--transicion-tema);
+}
+
+.totals-box select {
+    width: 100%;                   /* Selector de envío ocupa todo el ancho de su bloque */
+    padding: 0.5rem;
+    margin: 1rem 0;
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    border: 1px solid var(--color-borde);
+}
+
+.price-breakdown p {
+    display: flex;
+    justify-content: space-between;/* Alinea el texto a la izquierda y los valores a la derecha */
+    margin: 0.5rem 0;
+}
+
+.total-highlight {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--texto-secundario);
+}
+
+/* ==========================================================================
+   8. FORMULARIO DE CONTACTO
+   ========================================================================== */
+#contact-form {
+    background-color: var(--bg-tarjeta);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-borde);
+    max-width: 600px;              /* El formulario no se ensancha demasiado para mantener legibilidad */
+    margin: 0 auto;                /* Centra el formulario completo en la pantalla */
+    transition: var(--transicion-tema);
+}
+
+.form-group {
+    margin-bottom: 1.25rem;        /* Separa cada campo del formulario */
+    display: flex;
+    flex-direction: column;        /* Etiqueta arriba, campo abajo */
+}
+
+.form-group label {
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+.form-group input, .form-group textarea {
+    padding: 0.75rem;
+    border-radius: 5px;
+    border: 1px solid var(--color-borde);
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    font-family: inherit;
+}
+
+/* Estilos de errores en tiempo real */
+.error-msg {
+    color: #cc0000;                /* Color rojo de advertencia */
+    font-size: 0.85rem;            /* Letra pequeña de alerta */
+    margin-top: 0.25rem;
+    min-height: 1.2rem;            /* Evita saltos de estructura bruscos cuando aparece el error */
+}
+
+#contact-form button {
+    width: 100%;
+    background-color: var(--color-acento);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   9. FOOTER INFORMATIVO
+   ========================================================================== */
+footer {
+    background-color: var(--bg-tarjeta);
+    border-top: 1px solid var(--color-borde);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+    transition: var(--transicion-tema);
+}
+
+/* ==========================================================================
+   10. MEDIA QUERIES (Responsive - Mobile Breakpoint)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;    /* En móviles el logo va arriba, navegación en medio, botón abajo */
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .pedido-container {
+        grid-template-columns: 1fr; /* Colapsa las dos columnas del carrito en una sola columna vertical */
+    }
+}

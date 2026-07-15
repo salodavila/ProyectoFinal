@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <style>
+    .bg-circle { fill: var(--bg-tarjeta, #ffffff); stroke: var(--color-acento, #c19a6b); stroke-width: 6; transition: fill 0.3s, stroke 0.3s; }
+    .coffee-bean-left { fill: var(--texto-secundario, #6f4e37); transition: fill 0.3s; }
+    .coffee-bean-right { fill: var(--texto-principal, #2c1d11); transition: fill 0.3s; }
+    .text-brand { font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; font-weight: 800; font-size: 24px; fill: var(--texto-principal, #2c1d11); text-anchor: middle; letter-spacing: 3px; transition: fill 0.3s; }
+    .text-sub { font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; font-weight: 600; font-size: 14px; fill: var(--color-acento, #c19a6b); text-anchor: middle; letter-spacing: 5px; transition: fill 0.3s; }
+    .line-deco { stroke: var(--color-borde, #e6dfd5); stroke-width: 2; transition: stroke 0.3s; }
+  </style>
+
+  <circle cx="250" cy="250" r="220" class="bg-circle" />
+
+  <circle cx="250" cy="250" r="200" class="line-deco" stroke-dasharray="10, 10" fill="none" />
+
+  <g id="grano-cafe" transform="translate(0, -15)">
+    <path d="M 250,130 C 160,130 150,250 210,310 C 230,330 250,340 250,340 C 250,340 235,300 240,260 C 245,220 255,180 250,130 Z" class="coffee-bean-left" />
+    
+    <path d="M 250,130 C 340,130 350,250 290,310 C 270,330 250,340 250,340 C 250,340 265,300 260,260 C 255,220 245,180 250,130 Z" class="coffee-bean-right" />
+  </g>
+
+  <text x="250" y="385" class="text-brand">QUITO COFFEE</text>
+  <text x="250" y="415" class="text-sub">ROASTERS</text>
+
+  <line x1="180" y1="435" x2="320" y2="435" class="line-deco" />
+  <circle cx="250" cy="435" r="4" fill="var(--color-acento, #c19a6b)" />
+</svg>
